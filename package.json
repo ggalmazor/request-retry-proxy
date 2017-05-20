@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "server": "node server/server.js",
     "dev": "webpack-dev-server --port 9090 -d -w --inline --content-base client/"
   },
   "dependencies": {

@@ -10,26 +10,27 @@ angular.module('request-retry', [uiRouter])
     .config(['$stateProvider', $stateProvider => $stateProvider.state('root', {
       url: '',
       template: `
-        <p>Llevamos {{$ctrl.count}} llamada(s)</p>
-        <p ng-show="$ctrl.remaining > 0">Quedan {{$ctrl.remaining}} llamadas antes de que empiece a fallar</p>
-        <p ng-show="$ctrl.remaining === 0">La próxima llamada fallará</p>
-        <p ng-show="$ctrl.remaining === null">No sabemos cuántas llamadas podemos hacer antes de que empiece a fallar</p>
+        <p>We have called {{$ctrl.count}} times to the server</p>
+        <p ng-show="$ctrl.remaining > 0">You can call {{$ctrl.remaining}} more times to the server before having to reauthenticate</p>
+        <p ng-show="$ctrl.remaining === 0">Next call it's going to fail</p>
+        <p ng-show="$ctrl.remaining === null">We don't know how many calls we can make yet</p>
         
         <hr/>
         
-        <button ng-click="$ctrl.callOnce()">Llamar una vez</button>
+        <button ng-click="$ctrl.callOnce()">Call once</button>
         
         <hr/>
         
-        <p>Llamar cada <input ng-model="$ctrl.callDelay" type="number"/></p>
-        <button ng-click="$ctrl.startCalling()">Empezar a llamar</button>
-        <button ng-click="$ctrl.stopCalling()">Parar</button></p>
+        <p>Call every <input ng-model="$ctrl.callDelay" type="number"/></p>
+        <button ng-click="$ctrl.startCalling()">Start</button>
+        <button ng-click="$ctrl.stopCalling()">Stop</button>
         
         <hr/>
         
-        <p>Lanzar <input ng-model="$ctrl.callAmount" type="number"/> llamadas a la vez <button ng-click="$ctrl.callMany()">Lanzar llamadas</button></p>
+        <p>Call <input ng-model="$ctrl.callAmount" type="number"/> times at once</p>
+        <button ng-click="$ctrl.callMany()">Call many</button>
         <ul>
-          <li ng-repeat="call in $ctrl.calls">{{call.$$state.status}}</li>
+          <li ng-repeat="call in $ctrl.calls">Call #{{$index}} status is: <span ng-show="call.$$state.status === 0">pending</span><span ng-show="call.$$state.status === 1">completed</span></li>
         </ul>
       `,
       controller: Controller,

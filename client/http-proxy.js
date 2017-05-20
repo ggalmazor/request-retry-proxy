@@ -3,7 +3,7 @@ const modes = {
   reauthenticating: 'reauthenticating'
 };
 
-const maxAttempts = 10;
+const maxAttempts = 4;
 
 export default ($http, $q) => {
   let mode = modes.working;
@@ -27,8 +27,10 @@ export default ($http, $q) => {
           error => {
             if (mode === modes.working)
               reauthenticate();
-            if (++attempt > maxAttempts)
+            if (++attempt > maxAttempts) {
+              console.warn("Max attempts for this call have been reached");
               d.reject(error);
+            }
             else
               return retry(url, d, ++attempt);
           }
