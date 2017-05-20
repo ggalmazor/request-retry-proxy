@@ -7,7 +7,6 @@ const range = max => {
 
 export default class Controller {
   constructor(httpProxy, $interval, $q) {
-    console.log("Ctrl construido");
     this.httpProxy = httpProxy;
     this.$interval = $interval;
     this.count = 0;
@@ -23,7 +22,7 @@ export default class Controller {
   }
 
   callOnce() {
-    this.httpProxy.get("http://localhost:9091/comics")
+    return this.httpProxy.get("http://localhost:9091/comics")
         .then(response => {
           this.count = response.data.count;
           this.remaining = response.data.remaining
@@ -39,9 +38,7 @@ export default class Controller {
   }
 
   callMany() {
-    this.calls = range(this.callAmount).map(n => {
-      return this.httpProxy.get("http://localhost:9091/comics");
-    });
+    this.calls = range(this.callAmount).map(n => this.callOnce());
   }
 }
 

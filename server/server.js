@@ -25,7 +25,7 @@ app.use("/comics", (req, res, next) => {
     }
   }
   if (mode === 'fail')
-    next(new Error("We're failing now until re-authentication happens"));
+    next(new Error("We're failing now until reauthentication happens"));
   else
     next()
 });
